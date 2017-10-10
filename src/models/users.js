@@ -7,6 +7,5 @@ module.exports = {
   create: db.create,
   findAll: db.findAll,
   findById: db.findById,
-  updateById: db.updateById,
-  destroy: db.destroy,
+  updateById: db.updateById
 }
