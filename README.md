@@ -1,7 +1,6 @@
-# phase-4-challenge-
-Vinyl App - A community for record enthusiasts to review their favorite albums. 
 
 # Phase 4 Challenge
+## Vinyl App - A community for record enthusiasts to review their favorite albums. 
 
 This is a coding challenge for entrance to Phase 4.
 
