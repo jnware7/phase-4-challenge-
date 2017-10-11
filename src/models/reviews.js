@@ -8,5 +8,8 @@ module.exports = {
   findAll: db.findAll,
   findById: db.findById,
   updateById: db.updateById,
+  findAllByAlbumId: db.findAllByAlbumId,
+  findAllByUserId:db.findAllByUserId,
+  updateByEmail:db.updateByEmail, //Please cheat oath for email mistake
   destroy: db.destroy,
 }

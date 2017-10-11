@@ -1,21 +1,18 @@
 const db = require('./db')
 
-const create = function () {
+const create = function (username, password, email) {
   return db.query(`
     INSERT INTO
-      reviews (id, username, password, email, user_image, logged)
+      users ( username, password, email)
     VALUES
-      ($1,$2,$3,$4)
+      ($1,$2,$3)
     RETURNING
       *
       `,
       [
-        id,
         username,
         password,
-        email,
-        user_image,
-        logged
+        email
       ])
       .catch(error =>{
         console.error({message:'Error occured while executing users.create',
@@ -51,15 +48,28 @@ const findById = function (id) {
                      arguments: arguments});
     throw error});
 }
-
-const updateById = function(id, username, password, email, user_image, logged) {
+const findByEmail = function (email) {
+  return db.any(`
+    SELECT
+      *
+    FROM
+      reviews
+    WHERE
+      email =$1`,
+    [email])
+    .catch(error =>{
+      console.error({message:'Error occured while executing reviews.findByEmail',
+                     arguments: arguments});
+    throw error});
+}
+const updateById = function(id, username, password, email, user_image) {
   return db.one(`
     UPDATE
       users
     SET
-      ( username, password, email, user_image, logged)
+      ( username, password, email, user_image)
       =
-      ($1, $2, $3, $4, $5)
+      ($1, $2, $3, $4)
     WHERE
       users.id =$1`,
     [
@@ -67,8 +77,7 @@ const updateById = function(id, username, password, email, user_image, logged) {
       username,
       password,
       email,
-      user_image,
-      logged
+      user_image
     ])
       .catch(error =>{
         console.error({message:'Error occured while executing users.findById',
@@ -82,5 +91,6 @@ module.exports = {
   create,
   findAll,
   findById,
+  findByEmail,
   updateById
 }

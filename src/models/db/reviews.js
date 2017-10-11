@@ -1,19 +1,18 @@
 const db = require('./db')
 
-const create = function (albums_id, review, users_id, logged) {
+const create = function (albums_id, review, users_id) {
   return db.query(`
     INSERT INTO
-      reviews (albums_id, review, users_id, logged)
+      reviews (albums_id, review, users_id)
     VALUES
-      ($1,$2,$3,$4)
+      ($1,$2,$3)
     RETURNING
       *
       `,
       [
         albums_id,
         review,
-        users_id,
-        logged
+        users_id
       ])
       .catch(error =>{
         console.error({message:'Error occured while executing reviews.create',
@@ -33,6 +32,48 @@ const findAll = function () {
                      arguments: arguments});
     throw error});
 }
+const findAllByAlbumId = function (id) {
+  return db.query(`
+     SELECT
+       reviews.id, albums_id, review, users_id,logged,title,artist
+     FROM
+       reviews
+     JOIN
+       albums
+     ON
+       albums_id = albums.id
+     WHERE
+       albums_id =$1
+     ORDER BY
+       logged
+     DESC
+    ` ,[id])
+    .catch(error =>{
+      console.error({message:'Error occured while executing reviews.findAllByAlbumId',
+                     arguments: arguments});
+    throw error});
+}
+const findAllByUserId = function (id) {
+  return db.one(`
+    SELECT
+      reviews.id, albums_id, review, users_id,logged,title,artist
+    FROM
+      reviews
+    JOIN
+      albums
+    ON
+      albums_id = albums.id
+    WHERE
+      users_id=$1
+    ORDER BY
+      logged
+    DESC
+    ` ,[id])
+    .catch(error =>{
+      console.error({message:'Error occured while executing reviews.findAllByUserId',
+                     arguments: arguments});
+    throw error});
+}
 
 const findById = function (id) {
   return db.any(`
@@ -49,22 +90,22 @@ const findById = function (id) {
     throw error});
 }
 
-const updateById = function(id,albums_id, review, users_id, logged) {
+
+const updateById = function(id,albums_id, review, users_id) {
   return db.one(`
     UPDATE
       reviews
     SET
-      (albums_id, review, users_id, logged)
+      (albums_id, review, users_id)
       =
-      ($1, $2, $3, $4)
+      ($1, $2, $3)
     WHERE
       reviews.id =$1`,
     [
       id,
       albums_id,
       review,
-      users_id,
-      logged
+      users_id
     ])
       .catch(error =>{
         console.error({message:'Error occured while executing reviews.findById',
@@ -88,6 +129,8 @@ const destroy = function(id){
 module.exports = {
   create,
   findAll,
+  findAllByAlbumId,
+  findAllByUserId,
   findById,
   updateById,
   destroy

@@ -3,14 +3,17 @@ const albums = require('../../models/albums')
 const router = require('express').Router()
 
 
-router.get('/new',(request,response) => {
+// router.get('/new',(request,response) => {
+//
+// });
+
+// router.post('/',(request, response) => {
+//
+// });
+
+router.get('/',(request,response) => {
 
 });
-
-router.post('/',(request, response) => {
-
-});
-
 router.get('/:id',(request, response) => {
 
 });
