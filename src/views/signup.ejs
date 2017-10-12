@@ -5,7 +5,11 @@
 
   <h3 class="form-group col-md-auto">Sign Up</h3>
 
-
+  <% if (message.length > 0) { %>
+  	          <div class="alert alert-danger text-center" role="alert">
+  	          <%= message %>
+  	          </div>
+  	        <% } %>
 
   <div class="form-group col-md-auto" >
     <label for="email">UserName</label>

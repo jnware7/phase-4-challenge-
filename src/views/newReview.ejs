@@ -1,13 +1,13 @@
 <% include ./partials/header.ejs %>
 <% include ./partials/navbar.ejs %>
 
-<form class="form container align-items-center" action="/review/new/`${id}`" method="post" style="height: 490px; width: 400px; margin-bottom: 50px;">
+<form class="form container align-items-center" action="/reviews/new/<%= albums[0].id  %>" method="POST" style="height: 490px; width: 400px; margin-bottom: 50px;">
   <div class="form-group col-md-auto d-flex justify-content-center">
   </div>
   <h3 class="form-group col-md-auto"><%= albums[0].title %> Review</h3>
   <div class="form-group col-md-auto" >
 
-    <textarea name="body" rows="10" cols="50" style="width: 95%; border-radius: 2.px;" placeholder="Review goes here"></textarea>
+    <textarea name="body" rows="10" cols="50" style="width: 95%; border-radius: 2.px;" placeholder="Review goes here" name='review'></textarea>
   </div>
   <br>
 

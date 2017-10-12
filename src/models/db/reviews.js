@@ -37,7 +37,7 @@ const findAll = function () {
 
     ORDER BY
       logged
-    ASC
+    DESC
     LIMIT 3
     ` ,[])
     .catch(error =>{
@@ -46,7 +46,7 @@ const findAll = function () {
     throw error});
 }
 const findAllByAlbumId = function (id) {
-  return db.query(`
+  return db.any(`
     SELECT
       reviews.id, albums_id, review, users_id,reviews.logged,title,artist, username
     FROM
@@ -64,7 +64,7 @@ const findAllByAlbumId = function (id) {
     ORDER BY
       logged
     ASC
-    LIMIT 1
+
     ` ,[id])
     .catch(error =>{
       console.error({message:'Error occured while executing reviews.findAllByAlbumId',

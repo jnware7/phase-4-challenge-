@@ -15,7 +15,7 @@ const  id = request.params.id
     const userProfileInfo = results[0]
     const reviews = results[1]
 
-    response.render('profile', { user:userProfileInfo, reviews: reviews, editing:false})
+    response.render('profile', { user:userProfileInfo, reviews: reviews, editing:false, loggedIn: true})
   })
 
 

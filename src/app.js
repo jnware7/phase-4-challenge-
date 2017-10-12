@@ -6,7 +6,7 @@ const methodOverride = require('method-override');
 const routes = require('./server/routes');
 const expressValidator = require('express-validator');
 const passport = require('./auth/passport');
-
+const {loggedIn} = require('./server/middlewares')
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
 
@@ -18,7 +18,6 @@ app.use(session({
   secret:'black cat',
   resave: false,
   saveUninitialized: false,
-  // cookie: {secure: true}
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -28,10 +27,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(expressValidator());
 app.use(methodOverride('_method'))
-app.use((request, response, next) => {
-  app.locals.loggedin = null
-  next()
-})
+
+app.locals.isLoggedIn = loggedIn;
+
+
 app.use('/', routes)
 
 const port = process.env.PORT || 3000

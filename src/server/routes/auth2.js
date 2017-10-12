@@ -8,7 +8,7 @@ const router = require('express').Router()
 
 
 router.get('/new',(request,response) => {
-  response.render('login')
+  response.render('login', {loggedIn: false})
 });
 
 router.post('/',(request, response, next) => {
@@ -31,9 +31,5 @@ router.put('/:id', (request, response) => {
 
 });
 
-router.get('/:id/delete',(request, response) => {
-  request.logout();
-  response.redirect('/');
-});
 
 module.exports = router;

@@ -14,7 +14,7 @@ const findAll = function (){
 }
 
 const findById = function (id){
-  return db.any(`
+  return db.query(`
     SELECT
       *
     FROM
