@@ -1,0 +1,31 @@
+<% include ./partials/header.ejs %>
+<% include ./partials/navbar.ejs %>
+
+<form class="form container align-items-center" action="/auth" method="post" style="height: 530px;">
+
+  <h3 class="form-group col-md-auto">Sign Up</h3>
+
+
+
+  <div class="form-group col-md-auto" >
+    <label for="email">UserName</label>
+    <input style="width: 95%; border-radius: 2.px;" type="text" name="username" placeholder="UserName">
+  </div>
+  <div class="form-group col-md-auto" >
+    <label for="password">Password</label>
+    <input style="width: 95%; border-radius: 2.px;" type="password" name="password" placeholder="******">
+  </div>
+  <div class="form-group col-md-auto" >
+    <label for="password">Confirm Password</label>
+    <input style="width: 95%; border-radius: 2.px;" type="password" name="confirmPassword" placeholder="******">
+  </div>
+  <div class="form-group col-md-auto" >
+    <label for="email">Email</label><br>
+    <input style="width: 95%; border-radius: 2.px;" type="email" name="email" placeholder="example@mail.com">
+  </div>
+  <br>
+
+  <button type="submit" class="btn btn-primary btn-lg btn-block" name="signup-submit">Sign Up</button>
+</form>
+
+<% include ./partials/footer.ejs %>

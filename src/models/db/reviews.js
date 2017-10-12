@@ -22,10 +22,23 @@ const create = function (albums_id, review, users_id) {
 
 const findAll = function () {
   return db.query(`
-    SELECT
-      *
+        SELECT
+      reviews.id, albums_id, review, users_id,reviews.logged,title,artist, username
     FROM
       reviews
+    JOIN
+      albums
+    ON
+      albums_id = albums.id
+    JOIN
+      users
+    ON
+      users_id = users.id
+
+    ORDER BY
+      logged
+    ASC
+    LIMIT 3
     ` ,[])
     .catch(error =>{
       console.error({message:'Error occured while executing reviews.findAll',
@@ -34,19 +47,24 @@ const findAll = function () {
 }
 const findAllByAlbumId = function (id) {
   return db.query(`
-     SELECT
-       reviews.id, albums_id, review, users_id,logged,title,artist
-     FROM
-       reviews
-     JOIN
-       albums
-     ON
-       albums_id = albums.id
-     WHERE
-       albums_id =$1
-     ORDER BY
-       logged
-     DESC
+    SELECT
+      reviews.id, albums_id, review, users_id,reviews.logged,title,artist, username
+    FROM
+      reviews
+    JOIN
+      albums
+    ON
+      albums_id = albums.id
+    JOIN
+      users
+    ON
+      users_id = users.id
+    WHERE
+      albums_id =$1
+    ORDER BY
+      logged
+    ASC
+    LIMIT 1
     ` ,[id])
     .catch(error =>{
       console.error({message:'Error occured while executing reviews.findAllByAlbumId',
@@ -54,7 +72,7 @@ const findAllByAlbumId = function (id) {
     throw error});
 }
 const findAllByUserId = function (id) {
-  return db.one(`
+  return db.query(`
     SELECT
       reviews.id, albums_id, review, users_id,logged,title,artist
     FROM

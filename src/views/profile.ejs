@@ -1,0 +1,59 @@
+<% include ./partials/header.ejs %>
+<% include ./partials/navbar.ejs %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-6 col-md-4 d-flex justify-content-center user-info">
+
+      <div>
+      <img src="<%= user.user_image %>" class="profile-picture-main" >
+
+      <% if (editing) { %>
+        <h3>Edit Profile</h3>
+          <form action="/profile/edit" method="POST">
+            <div class="form-group">
+              <label for="user_image">User Image URL</label>
+             <input style="width: 95%; border-radius: 2px;" type="text" name="user_image" value="<%= user.user_image %>" placeholder="Image URL">
+            </div>
+            <div class="form-group"action="/users/profile/edit" method="POST">
+              <label for="name">User Name</label>
+             <input style="width: 95%; border-radius: 2px;" type="text" name="name" value="<%= user.name %>" placeholder="User Name">
+            </div>
+            <div class="form-group">
+              <label for="current_city">Current City</label>
+              <input style="width: 95%; border-radius: 2.px;" type="text" name="current_city" value="<%= user.current_city %>" placeholder="Where are you now ?">
+            </div>
+            <input type="hidden" name="id" value="<%= (user.id) %>">
+            <br>
+            <button type="submit" class="btn btn-success btn-lg btn-block" name="login-submit">Save Changes</button>
+          </form>
+      <% } else { %>
+      <h2>User Profile</h2>
+      <h4 style="padding-right:1%"><%= user.name %></h4>
+      <h6><%= user.date_joined %></h6>
+      <h5 style="text-align:center;"><%= user.current_city %></h5>
+      <form action="/profile/edit" method="GET">
+       <button type="submit" class="btn btn-primary btn-lg btn-block" name="login-submit">Edit Profile</button>
+      </form>
+      <% } %>
+    </div>
+    </div>
+    <div class="col col-md-8 posts">
+     <h2>Reviews</h2>
+
+<% reviews.forEach((reviews) => { %>
+  <div class="review-div">
+    <h4><a href=/reviews/<%= reviews.albums_id %>/delete> <%= reviews.title %> </a></h4>
+<hr>
+
+    <form style="float:left; padding-right: 11px;"  class="delete-post"  action='/reviews/<%= reviews.albums_id %>/delete' method="POST">
+      <a href=/reviews/<%= reviews.albums_id %>/delete><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+    </form>
+    <a href="/reviews/<%= reviews.id %>/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+  </div>
+<% }); %>
+    </div>
+  </div>
+</div>
+<% include ./partials/footer.ejs %>

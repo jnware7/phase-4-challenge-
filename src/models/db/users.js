@@ -1,23 +1,24 @@
 const db = require('./db')
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const create = function (username, password, email) {
-  return db.query(`
-    INSERT INTO
+  return bcrypt.hash(password, saltRounds)
+  .then((hash)=> {
+    return db.query(`
+      INSERT INTO
       users ( username, password, email)
-    VALUES
+      VALUES
       ($1,$2,$3)
-    RETURNING
+      RETURNING
       *
       `,
       [
         username,
-        password,
+        hash,
         email
-      ])
-      .catch(error =>{
-        console.error({message:'Error occured while executing users.create',
-                       arguments: arguments});
-      throw error});
+      ]);
+  });
 }
 
 
@@ -35,7 +36,7 @@ const findAll = function () {
 }
 
 const findById = function (id) {
-  return db.any(`
+  return db.query(`
     SELECT
       *
     FROM
@@ -49,11 +50,11 @@ const findById = function (id) {
     throw error});
 }
 const findByEmail = function (email) {
-  return db.any(`
+  return db.oneOrNone(`
     SELECT
       *
     FROM
-      reviews
+      users
     WHERE
       email =$1`,
     [email])

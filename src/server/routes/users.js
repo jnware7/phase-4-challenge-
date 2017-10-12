@@ -4,17 +4,18 @@ const Albums = require('../../models/albums')
 
 const router = require('express').Router()
 
-router.get('/',(request, response, next) => {
-  // id = request.user.id
+router.get('/:id',(request, response, next) => {
+const  id = request.params.id
+
   Promise.all([
-     Users.findById(1)//example remove
-     Reviews.findAllByUserId(1)//example remove
+     Users.findById(id),
+     Reviews.findAllByUserId(id)
   ])
   .then(results => {
     const userProfileInfo = results[0]
     const reviews = results[1]
 
-    response.json(results)
+    response.render('profile', { user:userProfileInfo, reviews: reviews, editing:false})
   })
 
 
@@ -27,9 +28,9 @@ router.post('/',(request, response) => {
 
 });
 
-router.get('/:id',(request, response) => {
-
-});
+// router.get('/:id',(request, response) => {
+//
+// });
 
 router.put('/:id', (request, response) => {
 

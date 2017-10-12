@@ -9,7 +9,7 @@ passport.use('local', new LocalStrategy({
 (email, password, done)=> {
   User.findByEmail(email)
   .then(user => {
-    if(!user) => { done(null, false)}
+    if(!user) {done(null, false)}
     bcrypt.compare(password, user.password)
      .then(result => {
        (result) ? done(null, user) : done(null, false)
